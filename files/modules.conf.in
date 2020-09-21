@@ -4,7 +4,7 @@ applications/mod_google_tts
 applications/mod_google_transcribe
 applications/mod_dialogflow
 #applications/mod_abstraction
-#applications/mod_av
+applications/mod_av
 #applications/mod_avmd
 #applications/mod_bert
 #applications/mod_blacklist
@@ -14,7 +14,7 @@ applications/mod_dialogflow
 applications/mod_commands
 applications/mod_conference
 #applications/mod_curl
-#applications/mod_cv
+applications/mod_cv
 #applications/mod_db
 #applications/mod_directory
 #applications/mod_distributor

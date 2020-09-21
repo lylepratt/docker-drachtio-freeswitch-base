@@ -161,7 +161,7 @@ RUN for i in $(seq 1 8); do mkdir -p "/usr/share/man/man${i}"; done \
 	  x11proto-damage-dev x11proto-fixes-dev x11proto-input-dev x11proto-kb-dev \
 	  x11proto-randr-dev x11proto-render-dev x11proto-xext-dev \
 	  x11proto-xinerama-dev xkb-data xorg-sgml-doctools xtrans-dev yasm \
-		&& apt-get install -y --quiet --no-install-recommends sqlite3 unixodbc libfreetype6 libcurl4-openssl-dev libedit2 libmp3lame-dev libmpg123-dev libshout-dev libsndfile1 \    
+		&& apt-get install -y --quiet --no-install-recommends sqlite3 unixodbc libfreetype6 libcurl4-openssl-dev libedit2 libmp3lame-dev libmpg123-dev libshout-dev libsndfile1 libavcodec-dev libavutil-dev libavformat-dev libav-tools libavresample-dev libswscale-dev liba52-0.7.4-dev libopencv-dev \    
 		&& cd /usr/local/freeswitch \
     && rm -Rf conf/diaplans/* conf/sip_profiles/* htdocs fonts images \
     && cd /usr/local && rm -Rf src share include games etc \
@@ -174,3 +174,4 @@ RUN for i in $(seq 1 8); do mkdir -p "/usr/share/man/man${i}"; done \
 
 ONBUILD ADD dialplan /usr/local/freeswitch/conf/dialplan
 ONBUILD ADD sip_profiles /usr/local/freeswitch/conf/sip_profiles
+ONBUILD ADD autoload_configs /usr/local/freeswitch/conf/autoload_configs
