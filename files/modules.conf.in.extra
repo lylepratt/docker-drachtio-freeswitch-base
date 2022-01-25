@@ -6,7 +6,7 @@ applications/mod_google_tts
 applications/mod_google_transcribe
 applications/mod_dialogflow
 #applications/mod_abstraction
-#applications/mod_av
+applications/mod_av
 #applications/mod_avmd
 #applications/mod_bert
 #applications/mod_blacklist
@@ -126,7 +126,7 @@ event_handlers/mod_event_socket
 #formats/mod_imagick
 formats/mod_local_stream
 formats/mod_native_file
-#formats/mod_png
+formats/mod_png
 #formats/mod_portaudio_stream
 #formats/mod_shell_stream
 formats/mod_shout
