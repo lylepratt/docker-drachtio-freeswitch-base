@@ -4,8 +4,13 @@
     <load module="mod_aws_lex"/>
     <load module="mod_aws_transcribe"/>
     <load module="mod_azure_transcribe"/>
+    <load module="mod_deepgram_transcribe"/>
     <load module="mod_google_transcribe"/>
-    <load module="mod_google_tts"/>
+    <load module="mod_ibm_transcribe"/>
+    <load module="mod_nuance_transcribe"/>
+    <load module="mod_nvidia_transcribe"/>
+    <load module="mod_soniox_transcribe"/>
+    <load module="mod_jambonz_transcribe"/>
     <load module="mod_dialogflow"/>
 
     <!-- Loggers (I'd load these first) -->
@@ -59,6 +64,7 @@
 
     <!-- Applications -->
     <!-- <load module="mod_signalwire"/> -->
+    <load module="mod_avmd"/>
     <load module="mod_commands"/>
     <load module="mod_conference"/>
     <!-- <load module="mod_curl"/> -->

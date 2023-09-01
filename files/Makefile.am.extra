@@ -259,12 +259,6 @@ endif
 
 if HAVE_GRPC
 GOOGLEAPIS_GENS_PATH = libs/googleapis/gens
-GOOGLEAPIS_LOGGING_CCS = $(shell find $(GOOGLEAPIS_GENS_PATH)/google/logging -name '*.pb.cc') 
-GOOGLEAPIS_API_CCS = $(shell find $(GOOGLEAPIS_GENS_PATH)/google/api -name '*.pb.cc')
-GOOGLEAPIS_RPC_CCS = $(shell find $(GOOGLEAPIS_GENS_PATH)/google/rpc -name '*.pb.cc')
-GOOGLEAPIS_SPEECH_CCS = $(shell find $(GOOGLEAPIS_GENS_PATH)/google/cloud/speech -name '*.pb.cc')
-GOOGLEAPIS_LONGRUNNING_CCS = $(shell find $(GOOGLEAPIS_GENS_PATH)/google/longrunning -name '*.pb.cc')
-GOOGLEAPIS_CCS = $(GOOGLEAPIS_API_CCS) $(GOOGLEAPIS_RPC_CCS) $(GOOGLEAPIS_LONGRUNNING_CCS) $(GOOGLEAPIS_SPEECH_CCS)
 
 nodist_libfreeswitch_libgoogleapis_la_SOURCES = \
 libs/googleapis/gens/google/api/monitoring.grpc.pb.cc \
@@ -305,7 +299,7 @@ libs/googleapis/gens/google/api/auth.pb.cc \
 libs/googleapis/gens/google/api/resource.pb.cc \
 libs/googleapis/gens/google/api/servicecontrol/v1/service_controller.pb.cc \
 libs/googleapis/gens/google/api/servicecontrol/v1/check_error.pb.cc \
-libs/googleapis/gens/google/api/servicecontrol/v1/check_error.grpc.pb.cc \ 
+libs/googleapis/gens/google/api/servicecontrol/v1/check_error.grpc.pb.cc \
 libs/googleapis/gens/google/api/servicecontrol/v1/distribution.grpc.pb.cc \
 libs/googleapis/gens/google/api/servicecontrol/v1/quota_controller.grpc.pb.cc \
 libs/googleapis/gens/google/api/servicecontrol/v1/metric_value.pb.cc \
@@ -404,12 +398,52 @@ libs/googleapis/gens/google/cloud/dialogflow/v2beta1/session_entity_type.pb.cc \
 libs/googleapis/gens/google/cloud/dialogflow/v2beta1/session.grpc.pb.cc \
 libs/googleapis/gens/google/cloud/dialogflow/v2beta1/session.pb.cc \
 libs/googleapis/gens/google/cloud/dialogflow/v2beta1/webhook.grpc.pb.cc \
-libs/googleapis/gens/google/cloud/dialogflow/v2beta1/webhook.pb.cc
+libs/googleapis/gens/google/cloud/dialogflow/v2beta1/webhook.pb.cc 
 
-libfreeswitch_libgoogleapis_la_CPPFLAGS = -I/usr/local/include -I$(GOOGLEAPIS_GENS_PATH) -std=c++11  -pthread
+libfreeswitch_libgoogleapis_la_CPPFLAGS = -I/usr/local/include -I$(GOOGLEAPIS_GENS_PATH) -std=c++17  -pthread
 
-CORE_LIBS+=libfreeswitch_libgoogleapis.la
-noinst_LTLIBRARIES += libfreeswitch_libgoogleapis.la
+# nuance asr 
+NUANCE_GENS_PATH = libs/nuance-asr-grpc-api/stubs/
+
+nodist_libfreeswitch_libnuanceapis_la_SOURCES = \
+libs/nuance-asr-grpc-api/stubs/nuance/rpc/error_details.pb.cc \
+libs/nuance-asr-grpc-api/stubs/nuance/rpc/status_code.pb.cc \
+libs/nuance-asr-grpc-api/stubs/nuance/rpc/status.pb.cc \
+libs/nuance-asr-grpc-api/stubs/nuance/rpc/error_details.grpc.pb.cc \
+libs/nuance-asr-grpc-api/stubs/nuance/rpc/status_code.grpc.pb.cc \
+libs/nuance-asr-grpc-api/stubs/nuance/rpc/status.grpc.pb.cc \
+libs/nuance-asr-grpc-api/stubs/nuance/asr/v1/result.pb.cc \
+libs/nuance-asr-grpc-api/stubs/nuance/asr/v1/resource.pb.cc \
+libs/nuance-asr-grpc-api/stubs/nuance/asr/v1/recognizer.pb.cc \
+libs/nuance-asr-grpc-api/stubs/nuance/asr/v1/result.grpc.pb.cc \
+libs/nuance-asr-grpc-api/stubs/nuance/asr/v1/resource.grpc.pb.cc \
+libs/nuance-asr-grpc-api/stubs/nuance/asr/v1/recognizer.grpc.pb.cc 
+
+libfreeswitch_libnuanceapis_la_CPPFLAGS = -I/usr/local/include -I$(NUANCE_GENS_PATH) -std=c++17  -pthread
+
+#nvidia asr
+NVIDIA_GENS_PATH = libs/riva-asr-grpc-api/stubs/
+
+nodist_libfreeswitch_libnvidiaapis_la_SOURCES = \
+libs/riva-asr-grpc-api/stubs/riva/proto/riva_asr.pb.cc \
+libs/riva-asr-grpc-api/stubs/riva/proto/riva_audio.pb.cc \
+libs/riva-asr-grpc-api/stubs/riva/proto/riva_asr.grpc.pb.cc \
+libs/riva-asr-grpc-api/stubs/riva/proto/riva_audio.grpc.pb.cc 
+
+libfreeswitch_libnvidiaapis_la_CPPFLAGS = -I/usr/local/include -I$(NVIDIA_GENS_PATH) -std=c++17  -pthread
+
+#soniox asr
+SONIOX_GENS_PATH = libs/soniox-asr-grpc-api/stubs/
+
+nodist_libfreeswitch_libsonioxapis_la_SOURCES = \
+libs/soniox-asr-grpc-api/stubs/soniox/speech_service.pb.cc \
+libs/soniox-asr-grpc-api/stubs/soniox/speech_service.grpc.pb.cc
+
+libfreeswitch_libsonioxapis_la_CPPFLAGS = -I/usr/local/include -I$(SONIOX_GENS_PATH) -std=c++17  -pthread
+
+CORE_LIBS+=libfreeswitch_libgoogleapis.la libfreeswitch_libnuanceapis.la libfreeswitch_libnvidiaapis.la libfreeswitch_libsonioxapis.la
+noinst_LTLIBRARIES += libfreeswitch_libgoogleapis.la libfreeswitch_libnuanceapis.la libfreeswitch_libnvidiaapis.la libfreeswitch_libsonioxapis.la
+
 endif
 
 lib_LTLIBRARIES	         = libfreeswitch.la
