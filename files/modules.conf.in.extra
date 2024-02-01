@@ -5,6 +5,7 @@ applications/mod_aws_transcribe
 applications/mod_azure_transcribe
 applications/mod_cobalt_transcribe
 applications/mod_deepgram_transcribe
+applications/mod_google_tts
 applications/mod_google_transcribe
 applications/mod_ibm_transcribe
 applications/mod_jambonz_transcribe
