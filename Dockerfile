@@ -13,8 +13,9 @@ RUN for i in $(seq 1 8); do mkdir -p "/usr/share/man/man${i}"; done \
     gnupg2 wget pkg-config ca-certificates libjpeg-dev libsqlite3-dev libpcre3-dev libldns-dev \
     libspeex-dev libspeexdsp-dev libedit-dev libtiff-dev yasm libswscale-dev haveged libre2-dev \
     libopus-dev libsndfile-dev libshout3-dev libmpg123-dev libmp3lame-dev libopusfile-dev libgoogle-perftools-dev \
-    libpng-dev libpng16-16 libavutil-dev libavresample-dev libavutil-dev libswscale-dev liba52-0.7.4-dev \
-		&& export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib \
+    libpng-dev libpng16-16 libavutil-dev libavresample-dev libavutil-dev libswscale-dev liba52-0.7.4-dev libabsl-dev \
+		&& ldconfig \
+        && export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib \
 		&& cd /tmp \
 		&& tar xvfz SpeechSDK-Linux-1.34.0.tar.gz \
 		&& cd SpeechSDK-Linux-1.34.0 \
