@@ -10,12 +10,11 @@ RUN for i in $(seq 1 8); do mkdir -p "/usr/share/man/man${i}"; done \
     libxtables-dev libip6tc-dev libip4tc-dev  libiptc-dev libavformat-dev liblua5.1-0-dev libavfilter-dev libavcodec-dev libswresample-dev \
     libevent-dev libpcap-dev libxmlrpc-core-c3-dev markdown libjson-glib-dev lsb-release libpq-dev php-dev \
     libhiredis-dev gperf libspandsp-dev default-libmysqlclient-dev htop dnsutils gdb libtcmalloc-minimal4 \
-    gnupg2 wget pkg-config ca-certificates libjpeg-dev libsqlite3-dev libpcre3-dev libldns-dev libboost-all-dev \
+    gnupg2 wget pkg-config ca-certificates libjpeg-dev libsqlite3-dev libpcre3-dev libldns-dev \
     libspeex-dev libspeexdsp-dev libedit-dev libtiff-dev yasm libswscale-dev haveged libre2-dev \
     libopus-dev libsndfile-dev libshout3-dev libmpg123-dev libmp3lame-dev libopusfile-dev libgoogle-perftools-dev \
     libpng-dev libpng16-16 libavutil-dev libavresample-dev libavutil-dev libswscale-dev liba52-0.7.4-dev libabsl-dev \
-		&& ldconfig \
-        && export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib \
+		&& export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib \
 		&& cd /tmp \
 		&& tar xvfz SpeechSDK-Linux-1.34.0.tar.gz \
 		&& cd SpeechSDK-Linux-1.34.0 \
@@ -24,20 +23,13 @@ RUN for i in $(seq 1 8); do mkdir -p "/usr/share/man/man${i}"; done \
 		&& cp /usr/local/lib/MicrosoftSpeechSDK/x64/libMicrosoft.*.so /usr/local/lib/ \
 		&& ls -lrt /usr/local/lib/ \
 		&& cd /usr/local/src \
-    && export CMAKE_VERSION=3.28.3 \
-    && wget https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-linux-x86_64.sh \
-    && chmod +x cmake-${CMAKE_VERSION}-linux-x86_64.sh \
-    && ./cmake-${CMAKE_VERSION}-linux-x86_64.sh --skip-license --prefix=/usr/local \
-    && rm -f cmake-${CMAKE_VERSION}-linux-x86_64.sh \
-    && cmake --version \
-    && cd /usr/local/src \
     && git config --global http.postBuffer 524288000  \
   	&& git config --global https.postBuffer 524288000 \
 		&& git config --global pull.rebase true \
 		&& git clone https://github.com/signalwire/freeswitch.git -b v1.10.10 \
-		&& git clone https://github.com/warmcat/libwebsockets.git -b v4.3.3 \
+		&& git clone https://github.com/warmcat/libwebsockets.git -b v4.3.2 \
 		&& git clone https://github.com/jambonz/freeswitch-modules.git -b main \
-        && git clone https://github.com/drachtio/drachtio-freeswitch-modules.git -b main \
+        && git clone https://github.com/drachtio/drachtio-freeswitch-modules.git -b v0.8.14 \
 		&& git clone https://github.com/grpc/grpc -b master && cd grpc && git checkout v1.57.0 && cd .. \
     && cd freeswitch/libs \
     && git clone https://github.com/drachtio/nuance-asr-grpc-api.git -b main \
@@ -50,8 +42,10 @@ RUN for i in $(seq 1 8); do mkdir -p "/usr/share/man/man${i}"; done \
     && git clone https://github.com/aws/aws-sdk-cpp.git -b 1.8.129 \
     && git clone https://github.com/googleapis/googleapis -b master \
     && cd googleapis && git checkout 29374574304f3356e64423acc9ad059fe43f09b5 && cd .. \
-    && git clone https://github.com/awslabs/aws-c-common.git \
-    && cp -r /usr/local/src/freeswitch-modules/mod_audio_fork /usr/local/src/freeswitch/src/mod/applications/mod_audio_fork \
+    && git clone https://github.com/awslabs/aws-c-common.git
+
+RUN cp -r /usr/local/src/freeswitch-modules/mod_audio_fork /usr/local/src/freeswitch/src/mod/applications/mod_audio_fork \
+    && cp -r /usr/local/src/freeswitch-modules/mod_aws_transcribe /usr/local/src/freeswitch/src/mod/applications/mod_aws_transcribe \
     && cp -r /usr/local/src/freeswitch-modules/mod_assemblyai_transcribe /usr/local/src/freeswitch/src/mod/applications/mod_assemblyai_transcribe \
     && cp -r /usr/local/src/freeswitch-modules/mod_azure_transcribe /usr/local/src/freeswitch/src/mod/applications/mod_azure_transcribe \
     && cp -r /usr/local/src/freeswitch-modules/mod_aws_lex /usr/local/src/freeswitch/src/mod/applications/mod_aws_lex \
@@ -65,7 +59,6 @@ RUN for i in $(seq 1 8); do mkdir -p "/usr/share/man/man${i}"; done \
     && cp -r /usr/local/src/freeswitch-modules/mod_jambonz_transcribe /usr/local/src/freeswitch/src/mod/applications/mod_jambonz_transcribe \
     && cp -r /usr/local/src/freeswitch-modules/mod_elevenlabs_tts /usr/local/src/freeswitch/src/mod/applications/mod_elevenlabs_tts \
     && cp -r /usr/local/src/freeswitch-modules/mod_dialogflow /usr/local/src/freeswitch/src/mod/applications/mod_dialogflow \
-    && cp -r /usr/local/src/freeswitch-modules/mod_whisper_tts /usr/local/src/freeswitch/src/mod/applications/mod_whisper_tts \
     && cp -r /usr/local/src/drachtio-freeswitch-modules/modules/mod_google_tts /usr/local/src/freeswitch/src/mod/applications/mod_google_tts \
     && cp /tmp/configure.ac.extra /usr/local/src/freeswitch/configure.ac \
     && cp /tmp/Makefile.am.extra /usr/local/src/freeswitch/Makefile.am \
@@ -84,55 +77,65 @@ RUN for i in $(seq 1 8); do mkdir -p "/usr/share/man/man${i}"; done \
     && cd /usr/local/src/freeswitch/src/mod/applications/mod_httapi \
     && patch < mod_httapi.c.patch \
     && cd /usr/local/src/freeswitch/src \
-    && cp /tmp/switch_event.c . \
-    && cd /usr/local/src/libwebsockets \
+    && cp /tmp/switch_event.c .
+
+RUN cd /usr/local/src/libwebsockets \
     && mkdir -p build && cd build && cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo && make && make install \
     && cd /usr/local/src/freeswitch/libs/libfvad \
     && autoreconf -i && ./configure && make && make install \
     && cd /usr/local/src/freeswitch/libs/spandsp \
     && ./bootstrap.sh && ./configure && make && make install \
     && cd /usr/local/src/freeswitch/libs/sofia-sip \
-    && ./bootstrap.sh && ./configure && make && make install \
-    && cd /usr/local/src/freeswitch/libs/aws-c-common \
+    && ./bootstrap.sh && ./configure && make && make install
+    
+RUN cd /usr/local/src/freeswitch/libs/aws-c-common \
     && mkdir -p build && cd build \
     && cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_SHARED_LIBS=OFF -DCMAKE_CXX_FLAGS="-Wno-unused-parameter" \
-    && make && make install \
-    && cd /usr/local/src/freeswitch/libs/aws-sdk-cpp \
+    && make && make install
+    
+RUN cd /usr/local/src/freeswitch/libs/aws-sdk-cpp \
     && git submodule update --init --recursive \
     && mkdir -p build && cd build \
     && cmake .. -DBUILD_ONLY="lexv2-runtime;transcribestreaming" -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_SHARED_LIBS=OFF -DCMAKE_CXX_FLAGS="-Wno-unused-parameter" \
     && make && make install \
-    && find /usr/local/src/freeswitch/libs/aws-sdk-cpp/ -type f -name "*.pc" | xargs cp -t /usr/local/lib/pkgconfig/ \
-    && echo building grpc \
+    && find /usr/local/src/freeswitch/libs/aws-sdk-cpp/ -type f -name "*.pc" | xargs cp -t /usr/local/lib/pkgconfig/
+    
+    
+RUN echo "building grpc" \
     && cd /usr/local/src/grpc \
     && git submodule update --init --recursive \
     && mkdir -p cmake/build \
     && cd cmake/build \
     && cmake -DBUILD_SHARED_LIBS=ON -DgRPC_SSL_PROVIDER=package -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo ../.. \
     && make \
-    && make install \
-    && cd /usr/local/src/freeswitch/libs/googleapis \
+    && make install
+
+RUN ldconfig
+    
+RUN cd /usr/local/src/freeswitch/libs/googleapis \
     && echo "Ref: https://github.com/GoogleCloudPlatform/cpp-samples/issues/113" \
     && sed -i 's/\$fields/fields/' google/maps/routes/v1/route_service.proto \
     && sed -i 's/\$fields/fields/' google/maps/routes/v1alpha/route_service.proto \
-    && LANGUAGE=cpp make \
-    && cd /usr/local/src/freeswitch/libs/nuance-asr-grpc-api \
-    && LANGUAGE=cpp make \
-    && cd /usr/local/src/freeswitch/libs/riva-asr-grpc-api \
-    && LANGUAGE=cpp make \
-    && cd /usr/local/src/freeswitch/libs/soniox-asr-grpc-api \
-    && LANGUAGE=cpp make \
-    && cd /usr/local/src/freeswitch/libs/cobalt-asr-grpc-api \
+    && LANGUAGE=cpp make
+RUN cd /usr/local/src/freeswitch/libs/nuance-asr-grpc-api \
+    && LANGUAGE=cpp make
+RUN cd /usr/local/src/freeswitch/libs/riva-asr-grpc-api \
+    && LANGUAGE=cpp make
+RUN cd /usr/local/src/freeswitch/libs/soniox-asr-grpc-api \
+    && LANGUAGE=cpp make
+RUN cd /usr/local/src/freeswitch/libs/cobalt-asr-grpc-api \
     && LANGUAGE=cpp make \
     && sed -i '/#ifndef cJSON_AS4CPP__h/i #ifndef cJSON__h\n#define cJSON__h' /usr/local/include/aws/core/external/cjson/cJSON.h \
-    && echo '#endif' >> /usr/local/include/aws/core/external/cjson/cJSON.h \
-    && cd /usr/local/src/freeswitch \
+    && echo '#endif' >> /usr/local/include/aws/core/external/cjson/cJSON.h
+    
+RUN cd /usr/local/src/freeswitch \
     && ./bootstrap.sh -j \
     && ./configure --enable-tcmalloc=yes --with-lws=yes --with-extra=yes --with-aws=yes \
     && make \
     && make install \
-    && make cd-sounds-install cd-moh-install \
-    && cp /tmp/acl.conf.xml /usr/local/freeswitch/conf/autoload_configs \
+    && make cd-sounds-install cd-moh-install
+    
+RUN cp /tmp/acl.conf.xml /usr/local/freeswitch/conf/autoload_configs \
     && cp /tmp/event_socket.conf.xml /usr/local/freeswitch/conf/autoload_configs \
     && cp /tmp/switch.conf.xml /usr/local/freeswitch/conf/autoload_configs \
     && cp /tmp/conference.conf.xml /usr/local/freeswitch/conf/autoload_configs \
