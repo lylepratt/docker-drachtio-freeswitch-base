@@ -12,7 +12,6 @@ applications/mod_dub
 applications/mod_elevenlabs_tts
 applications/mod_whisper_tts
 applications/mod_google_transcribe
-applications/mod_elevenlabs_tts
 applications/mod_ibm_transcribe
 applications/mod_jambonz_transcribe
 applications/mod_nuance_transcribe

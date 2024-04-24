@@ -20,9 +20,9 @@ RUN for i in $(seq 1 8); do mkdir -p "/usr/share/man/man${i}"; done \
     libspeex-dev libspeexdsp-dev libedit-dev libtiff-dev yasm libswscale-dev haveged libre2-dev \
     libopus-dev libsndfile-dev libshout3-dev libmpg123-dev libmp3lame-dev libopusfile-dev libgoogle-perftools-dev \
     libpng-dev libpng16-16 libavutil-dev libavresample-dev libavutil-dev libswscale-dev liba52-0.7.4-dev libabsl-dev \
-        && ldconfig \
+		&& ldconfig \
         && export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib \
-        && cd /usr/local/src \
+		&& cd /usr/local/src \
     && which cmake && cmake --version \
     && apt-get remove --purge -y cmake \
     && export CMAKE_VERSION=3.28.3 \
@@ -37,23 +37,23 @@ RUN for i in $(seq 1 8); do mkdir -p "/usr/share/man/man${i}"; done \
     && echo "copy azure speech sdk" \
     && ARCH=$(uname -m) && AZURE_ARCH=$(case "$ARCH" in x86_64) echo "x64" ;; arm64|aarch64) echo "arm64" ;; *) echo "Unsupported architecture: $ARCH" && exit 1 ;; esac) \
     && export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib \
-        && cd /tmp \
-        && tar xvfz SpeechSDK-Linux-1.37.0.tar.gz \
-        && cd SpeechSDK-Linux-1.37.0 \
-        && cp -r include /usr/local/include/MicrosoftSpeechSDK \
-        && cp -r lib/ /usr/local/lib/MicrosoftSpeechSDK \
+		&& cd /tmp \
+		&& tar xvfz SpeechSDK-Linux-1.37.0.tar.gz \
+		&& cd SpeechSDK-Linux-1.37.0 \
+		&& cp -r include /usr/local/include/MicrosoftSpeechSDK \
+		&& cp -r lib/ /usr/local/lib/MicrosoftSpeechSDK \
     && echo "copying azure speech sdk from usr/local/lib/MicrosoftSpeechSDK/${AZURE_ARCH}/libMicrosoft.*.so" \
-        && cp /usr/local/lib/MicrosoftSpeechSDK/${AZURE_ARCH}/libMicrosoft.*.so /usr/local/lib/ \
-        && ls -lrt /usr/local/lib/ \
+		&& cp /usr/local/lib/MicrosoftSpeechSDK/${AZURE_ARCH}/libMicrosoft.*.so /usr/local/lib/ \
+		&& ls -lrt /usr/local/lib/ \
     && cd /usr/local/src \
     && git config --global http.postBuffer 524288000  \
-    && git config --global https.postBuffer 524288000 \
-        && git config --global pull.rebase true \
-        && git clone https://github.com/signalwire/freeswitch.git -b v1.10.10 \
-        && git clone https://github.com/warmcat/libwebsockets.git -b v4.3.3 \
-        && git clone https://github.com/jambonz/freeswitch-modules.git -b 1.2.5 \
+  	&& git config --global https.postBuffer 524288000 \
+		&& git config --global pull.rebase true \
+		&& git clone https://github.com/signalwire/freeswitch.git -b v1.10.10 \
+		&& git clone https://github.com/warmcat/libwebsockets.git -b v4.3.3 \
+		&& git clone https://github.com/jambonz/freeswitch-modules.git -b 1.2.5 \
         && git clone https://github.com/drachtio/drachtio-freeswitch-modules.git -b v0.8.14 \
-        && git clone https://github.com/grpc/grpc -b master && cd grpc && git checkout v1.57.0 && cd .. \
+		&& git clone https://github.com/grpc/grpc -b master && cd grpc && git checkout v1.57.0 && cd .. \
     && cd freeswitch/libs \
     && git clone https://github.com/drachtio/nuance-asr-grpc-api.git -b main \
     && git clone https://github.com/drachtio/riva-asr-grpc-api.git -b main \
@@ -156,12 +156,12 @@ RUN for i in $(seq 1 8); do mkdir -p "/usr/share/man/man${i}"; done \
     && rm -Rf /usr/local/freeswitch/conf/dialplan/* \
     && rm -Rf /usr/local/freeswitch/conf/sip_profiles/* \
     && cp /usr/local/src/freeswitch/conf/vanilla/autoload_configs/modules.conf.xml /usr/local/freeswitch/conf/autoload_configs \
-        # && sed -i -e 's/global_codec_prefs=OPUS,G722,PCMU,PCMA,H264,VP8/global_codec_prefs=PCMU,PCMA,OPUS,G722/g' /usr/local/freeswitch/conf/vars.xml \
-        # && sed -i -e 's/outbound_codec_prefs=OPUS,G722,PCMU,PCMA,H264,VP8/outbound_codec_prefs=PCMU,PCMA,OPUS,G722/g' /usr/local/freeswitch/conf/vars.xml \
-      && cd /usr/local && rm -Rf src share include games etc \
+		# && sed -i -e 's/global_codec_prefs=OPUS,G722,PCMU,PCMA,H264,VP8/global_codec_prefs=PCMU,PCMA,OPUS,G722/g' /usr/local/freeswitch/conf/vars.xml \
+		# && sed -i -e 's/outbound_codec_prefs=OPUS,G722,PCMU,PCMA,H264,VP8/outbound_codec_prefs=PCMU,PCMA,OPUS,G722/g' /usr/local/freeswitch/conf/vars.xml \
+	  && cd /usr/local && rm -Rf src share include games etc \
     && cd /usr && rm -Rf games include \
     && cd /usr/share && rm -Rf freeswitch man \
-        && rm -Rf /tmp/* \
+		&& rm -Rf /tmp/* \
     && rm -Rf /var/log/* \
     && rm -Rf /var/lib/apt/lists/*
 

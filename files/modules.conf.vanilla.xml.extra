@@ -13,7 +13,6 @@
       <load module="mod_elevenlabs_tts"/>
       <load module="mod_whisper_tts"/>
       <load module="mod_google_transcribe"/>
-      <load module="mod_elevenlabs_tts"/>
       <load module="mod_google_tts"/>
       <load module="mod_ibm_transcribe"/>
       <load module="mod_nuance_transcribe"/>

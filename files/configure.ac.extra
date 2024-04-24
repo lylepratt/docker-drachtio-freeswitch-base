@@ -2169,7 +2169,6 @@ AC_CONFIG_FILES([Makefile
     src/mod/applications/mod_whisper_tts/Makefile
     src/mod/applications/mod_ibm_transcribe/Makefile
     src/mod/applications/mod_jambonz_transcribe/Makefile
-    src/mod/applications/mod_elevenlabs_tts/Makefile
     src/mod/applications/mod_nuance_transcribe/Makefile
     src/mod/applications/mod_nvidia_transcribe/Makefile
     src/mod/applications/mod_playht_tts/Makefile
